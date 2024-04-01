@@ -69,18 +69,19 @@ print(errors_kernel)
 print()
 
 # this is commented out because it takes a lot of time plus no need to rerun many time once we get answer  C=100, gamma=0.001
+# uncomment the lines with #X if you want to see output 
+
 # Define the parameter grid
-# This is a dictionary that contains the parameters we want to tune and their respective values we want to try out.
-#param_grid = {'C': [0.1, 1, 10, 100], 'gamma': [1, 0.1, 0.01, 0.001]}
+#param_grid = {'C': [0.1, 1, 10, 100], 'gamma': [1, 0.1, 0.01, 0.001]}  #X
 
 # Initialize a GridSearchCV object
-#grid = GridSearchCV(svm.SVC(kernel='rbf'), param_grid, refit=True, verbose=2)
+#grid = GridSearchCV(svm.SVC(kernel='rbf'), param_grid, refit=True, verbose=2) #X
 
 # Fit the model to the training data
-#grid.fit(X_train_features, y_train)
+#grid.fit(X_train_features, y_train)  #X
 
 # Print the best parameters
-#print(grid.best_params_)
+#print(grid.best_params_)  #X
 
 # Initialize a Kernel SVM model with the best parameters
 best_model = svm.SVC(kernel='rbf', C=100, gamma=0.001)
