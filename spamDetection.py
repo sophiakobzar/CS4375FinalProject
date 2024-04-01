@@ -69,13 +69,34 @@ print(errors_kernel)
 print()
 # Define the parameter grid
 # This is a dictionary that contains the parameters we want to tune and their respective values we want to try out.
-param_grid = {'C': [0.1, 1, 10, 100], 'gamma': [1, 0.1, 0.01, 0.001]}
+#param_grid = {'C': [0.1, 1, 10, 100], 'gamma': [1, 0.1, 0.01, 0.001]}
 
 # Initialize a GridSearchCV object
-grid = GridSearchCV(svm.SVC(kernel='rbf'), param_grid, refit=True, verbose=2)
+#grid = GridSearchCV(svm.SVC(kernel='rbf'), param_grid, refit=True, verbose=2)
 
 # Fit the model to the training data
-grid.fit(X_train_features, y_train)
+#grid.fit(X_train_features, y_train)
 
 # Print the best parameters
-print(grid.best_params_)
+#print(grid.best_params_)
+
+# Initialize a Kernel SVM model with the best parameters
+best_model = svm.SVC(kernel='rbf', C=100, gamma=0.001)
+
+# Train the model
+best_model.fit(X_train_features, y_train)
+
+# Evaluate accuracy on the test set
+accuracy_best = best_model.score(X_test_features, y_test)
+print(f"Best Model Accuracy: {accuracy_best:.2f}")
+
+# Print a classification report
+y_pred_best = best_model.predict(X_test_features)
+print(classification_report(y_test, y_pred_best))
+
+# Get the instances where the best model made errors
+errors_best = X_test[y_test != y_pred_best]
+
+# Print the errors
+print("Instances where the best model made errors:")
+print(errors_best)
