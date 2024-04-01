@@ -42,9 +42,8 @@ print(classification_report(y_test, y_pred_linear))
 # Get the instances where the Linear SVM model made errors
 errors = X_test[y_test != y_pred_linear]
 
-print("instances where the Linear SVM model made errors")
-# Print the errors
-print(errors)
+#print("instances where the Linear SVM model made errors")
+#print(errors)
 
 # Initialize a Kernel SVM model
 model_rbf = svm.SVC(kernel='rbf')
@@ -62,11 +61,9 @@ print(classification_report(y_test, y_pred_rbf))
 
 # Get the instances where the Kernel SVM model made errors
 errors_kernel = X_test[y_test != y_pred_rbf]
-print("\ninstances where the Kernel SVM model made errors")
-# Print the errors
-print(errors_kernel)
-
-print()
+#print("\ninstances where the Kernel SVM model made errors")
+#print(errors_kernel)
+#print()
 
 # this is commented out because it takes a lot of time plus no need to rerun many time once we get answer  C=100, gamma=0.001
 # uncomment the lines with #X if you want to see output 
@@ -101,5 +98,5 @@ print(classification_report(y_test, y_pred_best))
 errors_best = X_test[y_test != y_pred_best]
 
 # Print the errors
-print("Instances where the best model made errors:")
-print(errors_best)
+#print("Instances where the best model made errors:")
+#print(errors_best)
