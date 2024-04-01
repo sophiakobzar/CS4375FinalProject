@@ -67,6 +67,8 @@ print("\ninstances where the Kernel SVM model made errors")
 print(errors_kernel)
 
 print()
+
+# this is commented out because it takes a lot of time plus no need to rerun many time once we get answer  C=100, gamma=0.001
 # Define the parameter grid
 # This is a dictionary that contains the parameters we want to tune and their respective values we want to try out.
 #param_grid = {'C': [0.1, 1, 10, 100], 'gamma': [1, 0.1, 0.01, 0.001]}
