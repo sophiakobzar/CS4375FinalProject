@@ -65,7 +65,8 @@ errors_kernel = X_test[y_test != y_pred_rbf]
 #print(errors_kernel)
 #print()
 
-# this is commented out because it takes a lot of time plus no need to rerun many time once we get answer  C=100, gamma=0.001
+# this is commented out because it takes a lot of time plus no need to 
+# rerun many time once we get answer  C=100, gamma=0.001
 # uncomment the lines with #X if you want to see output 
 
 # Define the parameter grid
@@ -97,6 +98,20 @@ print(classification_report(y_test, y_pred_best))
 # Get the instances where the best model made errors
 errors_best = X_test[y_test != y_pred_best]
 
-# Print the errors
+#Print the errors
 #print("Instances where the best model made errors:")
 #print(errors_best)
+
+# Store the accuracies in a dictionary
+accuracies = {
+    'Linear SVM': accuracy_linear,
+    'Kernel SVM': accuracy_rbf,
+    'Best Model': accuracy_best
+}
+
+# Find the model with the highest accuracy
+best_model_name = max(accuracies, key=accuracies.get)
+best_model_accuracy = accuracies[best_model_name]
+
+# Print the best model and its accuracy
+print(f"\nThe best model is {best_model_name} with an accuracy of {best_model_accuracy:.2f}")
