@@ -12,8 +12,6 @@ except FileNotFoundError:
     print("The file 'spam_ham_dataset.csv' does not exist in the current directory.")
     exit()
 
-# No need for feature engineering in this case as we don't have an 'emailText' column
-
 X = spam['text']  # Email text
 y = spam['label_num']  # Labels (spam or ham)
 
@@ -25,93 +23,50 @@ vectorizer = CountVectorizer()
 X_train_features = vectorizer.fit_transform(X_train)
 X_test_features = vectorizer.transform(X_test)
 
-# Initialize a Linear SVM model
-model_linear = svm.SVC(kernel='linear')
-
-# Train the model
-model_linear.fit(X_train_features, y_train)
-
-# Evaluate accuracy on the test set
-accuracy_linear = model_linear.score(X_test_features, y_test)
-print(f"Linear SVM Accuracy: {accuracy_linear:.2f}")
-
-# Print a classification report
-y_pred_linear = model_linear.predict(X_test_features)
-print(classification_report(y_test, y_pred_linear))
-
-# Get the instances where the Linear SVM model made errors
-errors = X_test[y_test != y_pred_linear]
-
-#print("instances where the Linear SVM model made errors")
-#print(errors)
-
-# Initialize a Kernel SVM model
-model_rbf = svm.SVC(kernel='rbf')
-
-# Train the model
-model_rbf.fit(X_train_features, y_train)
-
-# Evaluate accuracy on the test set
-accuracy_rbf = model_rbf.score(X_test_features, y_test)
-print(f"\nKernel SVM Accuracy: {accuracy_rbf:.2f}")
-
-# Print a classification report
-y_pred_rbf = model_rbf.predict(X_test_features)
-print(classification_report(y_test, y_pred_rbf))
-
-# Get the instances where the Kernel SVM model made errors
-errors_kernel = X_test[y_test != y_pred_rbf]
-#print("\ninstances where the Kernel SVM model made errors")
-#print(errors_kernel)
-#print()
-
-# this is commented out because it takes a lot of time plus no need to 
-# rerun many time once we get answer  C=100, gamma=0.001
-# uncomment the lines with #X if you want to see output 
-
-# Define the parameter grid
-#param_grid = {'C': [0.1, 1, 10, 100], 'gamma': [1, 0.1, 0.01, 0.001]}  #X
-
-# Initialize a GridSearchCV object
-#grid = GridSearchCV(svm.SVC(kernel='rbf'), param_grid, refit=True, verbose=2) #X
-
-# Fit the model to the training data
-#grid.fit(X_train_features, y_train)  #X
-
-# Print the best parameters
-#print(grid.best_params_)  #X
-
-# Initialize a Kernel SVM model with the best parameters
-best_model = svm.SVC(kernel='rbf', C=100, gamma=0.001)
-
-# Train the model
-best_model.fit(X_train_features, y_train)
-
-# Evaluate accuracy on the test set
-accuracy_best = best_model.score(X_test_features, y_test)
-print(f"Best Model Accuracy: {accuracy_best:.2f}")
-
-# Print a classification report
-y_pred_best = best_model.predict(X_test_features)
-print(classification_report(y_test, y_pred_best))
-
-# Get the instances where the best model made errors
-errors_best = X_test[y_test != y_pred_best]
-
-#Print the errors
-#print("Instances where the best model made errors:")
-#print(errors_best)
-
-# Store the accuracies in a dictionary
-accuracies = {
-    'Linear SVM': accuracy_linear,
-    'Kernel SVM': accuracy_rbf,
-    'Best Model': accuracy_best
+# Store the models in a dictionary
+models = {
+    1: svm.SVC(kernel='linear'),
+    2: svm.SVC(kernel='rbf'),
+    3: svm.SVC(kernel='rbf', C=100, gamma=0.001)
 }
 
-# Find the model with the highest accuracy
-best_model_name = max(accuracies, key=accuracies.get)
-best_model_accuracy = accuracies[best_model_name]
+while True:
+    # Ask the user which model they want to run
+    print("Please select a model to run:")
+    print("1: Linear SVM")
+    print("2: Kernel SVM")
+    print("3: Best Model")
+    print("4: Exit")
 
-# Print the best model and its accuracy
-print(f"\nThe best model is {best_model_name} with an accuracy of {best_model_accuracy:.2f}")
+    # Get the user's choice
+    choice = int(input("Your choice: "))
+
+    # If the user chooses to exit
+    if choice == 4:
+        print("Exiting the program.")
+        break
+
+    # If the user chooses a valid model
+    elif choice in [1, 2, 3]:
+        # Get the chosen model
+        model = models[choice]
+
+        # Train the model
+        model.fit(X_train_features, y_train)
+
+        # Evaluate accuracy on the test set
+        accuracy = model.score(X_test_features, y_test)
+        print(f"Model Accuracy: {accuracy:.2f}")
+
+        # Print a classification report
+        y_pred = model.predict(X_test_features)
+        print(classification_report(y_test, y_pred))
+
+        # Get the instances where the model made errors
+        errors = X_test[y_test != y_pred]
+        print("Instances where the model made errors:")
+        print(errors)
+        print()
+    # If the user chooses an invalid option
+    else:
+        print("Invalid choice. Please choose a number between 1 and 4.")
