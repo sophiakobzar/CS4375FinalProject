@@ -28,7 +28,7 @@ X_test_features = vectorizer.transform(X_test)
 models = {
     1: svm.SVC(kernel='linear'),
     2: svm.SVC(kernel='rbf'),
-    3: MLPClassifier(hidden_layer_sizes=(3,), activation='relu', solver='adam', max_iter=75, random_state=42),
+    3: MLPClassifier(hidden_layer_sizes=(3,), activation='relu', solver='adam', max_iter=100, random_state=42),
     4: MLPClassifier(hidden_layer_sizes=(10,), activation='relu', solver='adam', max_iter=100, random_state=42)
 }
 
