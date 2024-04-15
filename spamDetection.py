@@ -1,9 +1,10 @@
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn import svm
 from sklearn.metrics import classification_report
+from sklearn.neural_network import MLPClassifier
 
 # Load the new dataset
 try:
@@ -23,11 +24,12 @@ vectorizer = CountVectorizer()
 X_train_features = vectorizer.fit_transform(X_train)
 X_test_features = vectorizer.transform(X_test)
 
-# Store the models in a dictionary
+# Define models
 models = {
     1: svm.SVC(kernel='linear'),
     2: svm.SVC(kernel='rbf'),
-    3: svm.SVC(kernel='rbf', C=100, gamma=0.001)
+    3: MLPClassifier(hidden_layer_sizes=(1,), activation='relu', solver='adam', max_iter=100, random_state=42),
+    4: MLPClassifier(hidden_layer_sizes=(10,), activation='relu', solver='adam', max_iter=100, random_state=42)
 }
 
 while True:
@@ -35,19 +37,20 @@ while True:
     print("Please select a model to run:")
     print("1: Linear SVM")
     print("2: Kernel SVM")
-    print("3: Best Model")
-    print("4: Exit")
+    print("3: Feedforward Neural Network")
+    print("4: Best Model (Takes about 15-30 seconds)")
+    print("5: Exit")
 
     # Get the user's choice
     choice = int(input("Your choice: "))
 
     # If the user chooses to exit
-    if choice == 4:
+    if choice == 5:
         print("Exiting the program.")
         break
 
     # If the user chooses a valid model
-    elif choice in [1, 2, 3]:
+    elif choice in [1, 2, 3, 4]:
         # Get the chosen model
         model = models[choice]
 
@@ -56,7 +59,7 @@ while True:
 
         # Evaluate accuracy on the test set
         accuracy = model.score(X_test_features, y_test)
-        print(f"Model Accuracy: {accuracy:.2f}")
+        print(f"Model Accuracy: {accuracy:.5f}")
 
         # Print a classification report
         y_pred = model.predict(X_test_features)
@@ -69,4 +72,4 @@ while True:
         print()
     # If the user chooses an invalid option
     else:
-        print("Invalid choice. Please choose a number between 1 and 4.")
+        print("Invalid choice. Please choose a number between 1 and 5.")
