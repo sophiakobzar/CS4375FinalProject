@@ -24,6 +24,7 @@ vectorizer = CountVectorizer()
 X_train_features = vectorizer.fit_transform(X_train)
 X_test_features = vectorizer.transform(X_test)
 
+
 # Define models
 models = {
     1: svm.SVC(kernel='linear'),
@@ -33,17 +34,20 @@ models = {
 }
 
 while True:
+    # Ask the user if they want to input an email or use the CSV file
+    data_source = input("Do you want to (1) input an email or (2) use the CSV file? ")
+
     # Ask the user which model they want to run
     print("Please select a model to run:")
     print("1: Linear SVM")
     print("2: Kernel SVM")
     print("3: Feedforward Neural Network")
-    print("4: Best Model (Takes about 15-30 seconds)")
+    print("4: Best FNN Model (Takes about 15-30 seconds)(changed hyperparameters from 3 model)")
     print("5: Exit")
 
     # Get the user's choice
     choice = int(input("Your choice: "))
-
+    
     # If the user chooses to exit
     if choice == 5:
         print("Exiting the program.")
@@ -53,23 +57,43 @@ while True:
     elif choice in [1, 2, 3, 4]:
         # Get the chosen model
         model = models[choice]
-
-        # Train the model
+        # Train the model on the entire dataset
         model.fit(X_train_features, y_train)
+        if data_source == "1":
+            # Provide an example of email text
+            print("Example of email text: 'Subject: Meeting Tomorrow; Hi, Can we meet tomorrow at 10 AM?'")
+            
+            # Get email text from the user
+            email_text = input("Please enter the email text: ")
 
-        # Evaluate accuracy on the test set
-        accuracy = model.score(X_test_features, y_test)
-        print(f"Model Accuracy: {accuracy:.5f}")
+            # Convert the email text into numerical features
+            email_features = vectorizer.transform([email_text])
 
-        # Print a classification report
-        y_pred = model.predict(X_test_features)
-        print(classification_report(y_test, y_pred))
+            # Use the chosen model to predict
+            email_pred = model.predict(email_features)
 
-        # Get the instances where the model made errors
-        errors = X_test[y_test != y_pred]
-        print("Instances where the model made errors:")
-        print(errors)
-        print()
-    # If the user chooses an invalid option
+            # Print the prediction
+            if email_pred[0] == 0:
+                print("The email is predicted to be ham.")
+            else:
+                print("The email is predicted to be spam.")
+            print()
+        elif data_source == "2":
+            # Train the model
+            model.fit(X_train_features, y_train)
+
+            # Evaluate accuracy on the test set
+            accuracy = model.score(X_test_features, y_test)
+            print(f"Model Accuracy: {accuracy:.5f}")
+
+            # Print a classification report
+            y_pred = model.predict(X_test_features)
+            print(classification_report(y_test, y_pred))
+
+            # Get the instances where the model made errors
+            errors = X_test[y_test != y_pred]
+            print("Instances where the model made errors:")
+            print(errors)
+            print()
     else:
         print("Invalid choice. Please choose a number between 1 and 5.")
