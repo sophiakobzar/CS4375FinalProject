@@ -11,4 +11,4 @@ Change your working directory to the CS4375FinalProject/Project_FINAL path:
 cd CS4375FinalProject/Project_FINAL
 
 Follow the Instructions:
-Inside the Project_FINAL directory, you’ll find detailed instructions
+Inside the Project_FINAL directory, you’ll find detailed instructions in the README.docx file
