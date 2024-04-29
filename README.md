@@ -4,7 +4,7 @@ Welcome to the CS4375FinalProject repository! This project represents the culmin
 Clone the Repository:
 Open your terminal or Git client.
 Run the following command to clone the repository:
-git clone https://github.com/your-username/CS4375FinalProject.git
+https://github.com/sophiakobzar/CS4375FinalProject.git
 
 Navigate to the Project Directory:
 Change your working directory to the CS4375FinalProject/Project_FINAL path:
