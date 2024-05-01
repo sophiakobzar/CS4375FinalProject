@@ -21,13 +21,24 @@ This project uses Python and requires the following dependencies:
 - flask-socketio
 - pandas
 - numpy
-- sklearn
+- scikit-learn
 
 In order to install any of the required python modules, you may run 
-* pip install <module name>
+* pip install (moduleName)
 
-# Manual Running
+# Simple startup
+
+Depending on your operating system, run the associated LaunchProgram file.
+
+- Macbooks: LaunchProgram.sh
+- Windows: LaunchProgram.bat
+- Linux: LaunchProgram.bash
+
+* Macbook start file has not been tested. If any issues arrise, please try starting the server manually
+
+# Manual startup
 
 To startup the program, move to the Project_FINAL directory and run the server.py file using python
+- Python server.py
 
-This will open port 5000 upon the computer, in which you can reach via a web browser at url localhost:5000 to control the application.
+This will open port 5000 upon the computer, in which you can reach via a web browser at url http://localhost:5000 to control the application.
