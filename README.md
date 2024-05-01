@@ -34,7 +34,7 @@ Depending on your operating system, run the associated LaunchProgram file.
 - Windows: LaunchProgram.bat
 - Linux: LaunchProgram.bash
 
-* Macbook start file has not been tested. If any issues arrise, please try starting the server manually
+* The Macbook start file has not been tested. If any issues arrise, please try starting the server manually
 
 # Manual startup
 
